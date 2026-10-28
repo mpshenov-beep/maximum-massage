@@ -1,75 +1,60 @@
 (() => {
   'use strict';
-  const config = window.SITE_CONTENT;
-  const list = document.getElementById('service-list');
-  const price = new Intl.NumberFormat('ru-RU');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const revealObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
-    for (const entry of entries) if(entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      revealObserver.unobserve(entry.target);
-    }
-  }, {threshold: 0.08, rootMargin: '0px 0px -20px 0px'}) : null;
-  function reveal(element, index = 0) {
-    if(!revealObserver || reducedMotion.matches) return;
-    element.classList.add('reveal');
-    element.style.setProperty('--reveal-delay', `${Math.min(index, 3) * 70}ms`);
-    revealObserver.observe(element);
-  }
-  function renderServices(category) {
-    if(revealObserver) for(const oldCard of list.children) revealObserver.unobserve(oldCard);
+  const content=window.SITE_CONTENT;
+  const list=document.getElementById('service-list');
+  const price=new Intl.NumberFormat('ru-RU');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const observer='IntersectionObserver' in window ? new IntersectionObserver(entries=>{
+    for(const entry of entries) if(entry.isIntersecting){entry.target.classList.add('is-revealed');observer.unobserve(entry.target);}
+  },{threshold:.08,rootMargin:'0px 0px -15px 0px'}):null;
+  const reveal=(element,index=0)=>{if(!observer||reduce.matches)return;element.classList.add('reveal');element.style.setProperty('--delay',`${Math.min(index,3)*75}ms`);observer.observe(element);};
+  const node=(tag,className,text)=>{const e=document.createElement(tag);if(className)e.className=className;if(text)e.textContent=text;return e;};
+  const icon=(name)=>{const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('aria-hidden','true');const u=document.createElementNS(s.namespaceURI,'use');u.setAttribute('href','#i-'+name);s.append(u);return s;};
+  let group='general',kind='wellness';
+  const categories={wellness:['Общий оздоровительный массаж тела','4 программы · от 1 до 2,5 часов'],relax:['Общий расслабляющий массаж тела','4 программы · от 1 до 2,5 часов'],local:['Массаж отдельных зон','7 программ · от 20 до 50 минут'],complex:['Комплексы массажа','4 программы · 1 час']};
+  function detailsBlock(parent,title,paragraphs){if(!paragraphs.length)return;parent.append(node('h5','',title));for(const p of paragraphs)parent.append(node('p','',p));}
+  function sourceBlocks(parent,title,blocks){if(!blocks.length)return;parent.append(node('h5','',title));for(const b of blocks)parent.append(node('p',b.tag==='h3'?'detail-subheading':'',b.text));}
+  function render(){
+    if(observer)for(const card of list.children)observer.unobserve(card);
     list.replaceChildren();
-    const selected = config.services.filter(service => service.category === category);
-    document.getElementById('category-description').textContent = config.categories[category];
-    for (const [index, service] of selected.entries()) {
-      const card = document.createElement('article'); card.className = 'service-card';
-      const meta = document.createElement('div'); meta.className = 'service-meta';
-      const time = document.createElement('span'); time.textContent = service.duration;
-      const number = document.createElement('span'); number.className = 'service-number'; number.textContent = String(index + 1).padStart(2, '0'); meta.append(time, number);
-      const heading = document.createElement('h3'); heading.textContent = service.name;
-      const subtitle = document.createElement('div'); subtitle.className = 'service-subtitle'; subtitle.textContent = service.subtitle || '';
-      const scope = document.createElement('p'); scope.textContent = service.scope;
-      const bottom = document.createElement('div'); bottom.className = 'service-bottom';
-      const cost = document.createElement('span'); cost.className = 'service-price'; cost.textContent = price.format(service.price) + ' ₽';
-      const book = document.createElement('a'); book.href = config.links.booking; book.textContent = 'Записаться ↗'; book.setAttribute('aria-label', `Записаться: ${service.name}, ${price.format(service.price)} рублей`);
-      bottom.append(cost, book); card.append(meta, heading); if(service.subtitle) card.append(subtitle); card.append(scope, bottom); list.append(card); reveal(card, index);
-    }
-  }
-  for (const button of document.querySelectorAll('[data-filter]')) {
-    button.addEventListener('click', () => {
-      for (const sibling of document.querySelectorAll('[data-filter]')) sibling.setAttribute('aria-pressed', String(sibling === button));
-      renderServices(button.dataset.filter);
+    const category=group==='general'?kind:group;
+    document.getElementById('category-title').textContent=categories[category][0];
+    document.getElementById('category-note').textContent=categories[category][1];
+    document.getElementById('body-tabs').hidden=group!=='general';
+    document.querySelectorAll('[data-group]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.group===group)));
+    document.querySelectorAll('[data-kind]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kind===kind)));
+    content.services.filter(s=>s.category===category).forEach((s,i)=>{
+      const card=node('article','service-card');card.dataset.program=s.program;
+      const meta=node('div','service-meta'),time=node('span','service-time');time.append(icon('clock'),document.createTextNode(s.duration));meta.append(time,node('span','service-index',String(i+1).padStart(2,'0')));
+      const type=node('p','service-type',s.type),name=node('h4','',`«${s.program}»`),intro=node('p','service-intro',s.intro);
+      const bottom=node('div','service-bottom'),cost=node('span','service-price',price.format(s.price)+' ₽'),book=node('a','service-book','Записаться');book.href=content.links.booking;book.setAttribute('aria-label',`Записаться на программу «${s.program}», ${price.format(s.price)} рублей`);book.append(icon('up'));bottom.append(cost,book);
+      const details=node('details','service-details'),summary=node('summary','','Описание программы'),body=node('div','service-detail-content');
+      sourceBlocks(body,'Что входит в сеанс',s.coverageBlocks);
+      sourceBlocks(body,'О программе',s.descriptionBlocks.filter(b=>b.text!==s.intro));
+      detailsBlock(body,'Как проходит сеанс',s.session);
+      details.append(summary,body);card.append(meta,type,name,intro,bottom,details);list.append(card);reveal(card,i%2);
     });
   }
-  renderServices('local');
-  for (const element of document.querySelectorAll('[data-link="booking"]')) element.href = config.links.booking;
-  const options = document.getElementById('messenger-options');
-  for(const contact of config.contacts) {
-    if(!contact.url) continue;
-    const link = document.createElement('a'); link.className='book-option'; link.href=contact.url;
-    const icon=document.createElement('span'); icon.className='option-icon'; icon.setAttribute('aria-hidden','true');
-    const logo=document.createElement('img');logo.src=contact.logo;logo.alt='';logo.width=38;logo.height=38;icon.append(logo);
-    const text=document.createElement('span'); const name=document.createElement('strong'); name.textContent=contact.label;
-    const sub=document.createElement('small'); sub.textContent=contact.description; text.append(name,sub);
-    const arrow=document.createElement('span'); arrow.textContent='↗'; arrow.setAttribute('aria-hidden','true'); link.append(icon,text,arrow); options.append(link);
-  }
-  const dialog = document.getElementById('photo-dialog');
-  let lastPhotoButton;
-  for(const button of document.querySelectorAll('[data-photo]')) button.addEventListener('click',()=>{
-    lastPhotoButton=button; document.getElementById('dialog-image').src=button.dataset.photo; document.getElementById('dialog-image').alt=button.dataset.caption;
-    document.getElementById('dialog-caption').textContent=button.dataset.caption;dialog.showModal();
-  });
+  document.querySelectorAll('[data-group]').forEach(b=>b.addEventListener('click',()=>{group=b.dataset.group;render();}));
+  document.querySelectorAll('[data-kind]').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.kind;render();}));
+  document.querySelectorAll('[data-category]').forEach(a=>a.addEventListener('click',()=>{group=a.dataset.category;render();}));
+  document.querySelectorAll('[data-link="booking"]').forEach(a=>a.href=content.links.booking);
+  render();
+  const contacts=document.getElementById('messenger-options');
+  for(const c of content.contacts){if(!c.url)continue;const a=node('a','messenger');a.href=c.url;const image=node('img');image.src=c.logo;image.alt='';image.width=37;image.height=37;a.append(image,node('span','',c.label),icon('up'));contacts.append(a);}
+  const menu=document.querySelector('.menu-toggle'),menuPanel=document.getElementById('mobile-menu');
+  function closeMenu(){menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Открыть меню');menuPanel.hidden=true;}
+  menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Закрыть меню':'Открыть меню');menuPanel.hidden=!open;});
+  menuPanel.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!menuPanel.hidden){closeMenu();menu.focus();}});
+  const dialog=document.getElementById('photo-dialog');let lastPhoto;
+  document.querySelectorAll('[data-photo]').forEach(button=>button.addEventListener('click',()=>{lastPhoto=button;const image=document.getElementById('dialog-image');image.src=button.dataset.photo;image.alt=button.dataset.caption;document.getElementById('dialog-caption').textContent=button.dataset.caption;dialog.showModal();document.body.classList.add('has-dialog');}));
   dialog.querySelector('button').addEventListener('click',()=>dialog.close());
-  dialog.addEventListener('click',event=>{if(event.target===dialog && (event.clientX<dialog.getBoundingClientRect().left || event.clientX>dialog.getBoundingClientRect().right || event.clientY<dialog.getBoundingClientRect().top || event.clientY>dialog.getBoundingClientRect().bottom)) dialog.close();});
-  dialog.addEventListener('close',()=>lastPhotoButton?.focus());
-  for(const element of document.querySelectorAll('.section-top, .photo-grid figure, .comfort-grid>div, .navigation-grid>*, .review-section>*, .booking-panel')) reveal(element);
-  const progress = document.createElement('div'); progress.className='reading-progress'; progress.setAttribute('aria-hidden','true'); document.body.append(progress);
-  let framePending = false;
-  function updateScroll() {
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.transform = `scaleX(${height > 0 ? Math.min(1, Math.max(0, window.scrollY / height)) : 0})`;
-    framePending = false;
-  }
-  window.addEventListener('scroll',()=>{if(!framePending){framePending=true;requestAnimationFrame(updateScroll);}}, {passive:true});
-  window.addEventListener('resize',updateScroll);updateScroll();
+  dialog.addEventListener('click',event=>{if(event.target!==dialog)return;const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();});
+  dialog.addEventListener('close',()=>{document.body.classList.remove('has-dialog');lastPhoto?.focus({preventScroll:true});});
+  document.querySelectorAll('.section-head,.category-card,.catalog-top,.gallery figure,.comfort-grid article,.address-data,.first-visit,.route-gallery figure,.reviews-card,.review-copy,.booking-copy,.booking-options').forEach((e,i)=>reveal(e,i%3));
+  const progress=document.querySelector('.reading-progress');let pending=false;
+  function update(){const height=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${height>0?Math.min(1,Math.max(0,scrollY/height)):0})`;pending=false;}
+  addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(update);}},{passive:true});addEventListener('resize',update);update();
+  if('IntersectionObserver' in window){const navObserver=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){const id=e.target.id==='catalog'?'services':e.target.id;document.querySelectorAll('.bottom-nav a').forEach(a=>{const active=a.getAttribute('href')==='#'+id;a.classList.toggle('is-active',active);if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}},{rootMargin:'-20% 0px -65% 0px'});document.querySelectorAll('#services,#catalog,#cabinet,#address,#booking').forEach(e=>navObserver.observe(e));}
 })();
