@@ -47,4 +47,6 @@ body{background:radial-gradient(ellipse at 100% 0,#777d8524,transparent 19%),rad
 .orbit{inset:16% 6%}
 #dialog-media.is-document{height:62vh;align-items:center;overflow:hidden}#dialog-media.is-document img{width:min(56vh,60vw);margin:0;flex:none}
 @media(max-width:350px){.header-inner{gap:10px}.wordmark{font-size:21px}.menu-toggle{gap:7px;font-size:11px}}
+.category-local .category-photo img{object-position:50% 70%}.mobile-menu a span{display:none}
+
 
