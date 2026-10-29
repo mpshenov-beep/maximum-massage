@@ -26,6 +26,7 @@
     content.services.filter(s=>s.category===category).forEach((s,i)=>{
       const card=node('article','service-card');card.dataset.program=s.program;
       const meta=node('div','service-meta'),time=node('span','service-time');time.append(icon('clock'),document.createTextNode(s.duration));meta.append(time,node('span','service-index',String(i+1).padStart(2,'0')));
+      card.dataset.tone=s.category==='local'&&s.name.includes('лица')?'face':s.category;
       const type=node('p','service-type',s.type),name=node('h4','',`«${s.program}»`),intro=node('p','service-intro',s.intro);
       const bottom=node('div','service-bottom'),cost=node('span','service-price',price.format(s.price)+' ₽'),book=node('a','service-book','Записаться');book.href=content.links.booking;book.setAttribute('aria-label',`Записаться на программу «${s.program}», ${price.format(s.price)} рублей`);book.append(icon('up'));bottom.append(cost,book);
       const details=node('details','service-details'),summary=node('summary','','Описание программы'),body=node('div','service-detail-content');
@@ -48,11 +49,22 @@
   menuPanel.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!menuPanel.hidden){closeMenu();menu.focus();}});
   const dialog=document.getElementById('photo-dialog');let lastPhoto;
-  document.querySelectorAll('[data-photo]').forEach(button=>button.addEventListener('click',()=>{lastPhoto=button;const image=document.getElementById('dialog-image');image.src=button.dataset.photo;image.alt=button.dataset.caption;document.getElementById('dialog-caption').textContent=button.dataset.caption;dialog.showModal();document.body.classList.add('has-dialog');}));
+  document.querySelectorAll('[data-photo]').forEach(button=>button.addEventListener('click',()=>{lastPhoto=button;const image=document.getElementById('dialog-image');image.src=button.dataset.photo;image.alt=button.dataset.caption;const media=document.getElementById('dialog-media');media.classList.toggle('is-document',Boolean(button.dataset.document));media.classList.toggle('is-route',Boolean(button.dataset.route));document.getElementById('dialog-caption').textContent=button.dataset.caption;dialog.showModal();document.body.classList.add('has-dialog');}));
   dialog.querySelector('button').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',event=>{if(event.target!==dialog)return;const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();});
   dialog.addEventListener('close',()=>{document.body.classList.remove('has-dialog');lastPhoto?.focus({preventScroll:true});});
-  document.querySelectorAll('.section-head,.category-card,.catalog-top,.gallery figure,.comfort-grid article,.address-data,.first-visit,.route-gallery figure,.reviews-card,.review-copy,.booking-copy,.booking-options').forEach((e,i)=>reveal(e,i%3));
+  document.querySelectorAll('.about-heading,.about-copy,.education,.gift-copy,.gift-gallery,.cabinet-film,.section-head,.category-card,.catalog-top,.gallery figure,.comfort-grid article,.address-data,.first-visit,.route-gallery figure,.reviews-card,.review-copy,.booking-copy,.booking-options').forEach((e,i)=>reveal(e,i%3));
+  // Load motion only near the viewport. A user gesture is required for sound.
+  const film=document.getElementById('cabinet-video'),playButton=document.getElementById('film-play'),soundButton=document.getElementById('film-sound');
+  function loadVideo(video){const source=video.querySelector('source[data-src]');if(source){source.src=source.dataset.src;delete source.dataset.src;video.load();}}
+  function syncFilm(){playButton.textContent=film.paused?'Смотреть видео':'Пауза';soundButton.textContent=film.muted?'Включить звук':'Выключить звук';soundButton.setAttribute('aria-pressed',String(!film.muted));}
+  function startVideo(video){loadVideo(video);video.play().catch(()=>{if(video===film)syncFilm();});}
+  playButton.addEventListener('click',()=>{if(film.paused)startVideo(film);else film.pause();});
+  soundButton.addEventListener('click',()=>{loadVideo(film);film.muted=!film.muted;if(film.paused)startVideo(film);syncFilm();});
+  film.addEventListener('play',syncFilm);film.addEventListener('pause',syncFilm);film.addEventListener('volumechange',syncFilm);
+  document.querySelectorAll('.card-film').forEach(video=>video.addEventListener('playing',()=>video.classList.add('is-playing')));
+  if('IntersectionObserver' in window){const videoObserver=new IntersectionObserver(entries=>{for(const e of entries){const video=e.target;if(e.isIntersecting){if(!reduce.matches&&!navigator.connection?.saveData)startVideo(video);}else{video.pause();if(video===film){video.muted=true;syncFilm();}}}},{threshold:.25});document.querySelectorAll('video').forEach(v=>videoObserver.observe(v));}
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){document.querySelectorAll('video').forEach(v=>v.pause());film.muted=true;syncFilm();}});
   const progress=document.querySelector('.reading-progress');let pending=false;
   function update(){const height=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${height>0?Math.min(1,Math.max(0,scrollY/height)):0})`;pending=false;}
   addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(update);}},{passive:true});addEventListener('resize',update);update();
