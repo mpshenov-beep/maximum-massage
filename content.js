@@ -1,6 +1,7 @@
 window.SITE_CONTENT = {
   "links": {
-    "booking": "https://dikidi.net/1791869"
+    "booking": "https://dikidi.net/1791869?p=1.pi-ssm",
+    "bookingProfile": "https://dikidi.net/1791869"
   },
   "contacts": [
     {
@@ -85,7 +86,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "За компьютером, на занятиях, в дороге или во время повседневных дел нередко приходится долго сидеть или стоять.",
-      "sourceKey": "shvz-sbros-ustalost"
+      "sourceKey": "shvz-sbros-ustalost",
+      "displayCoverage": [
+        "Шея и плечи"
+      ]
     },
     {
       "name": "Массаж спины и ШВЗ",
@@ -149,7 +153,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Учёба, поездки или часы за компьютером — мышцы могут уставать и без активного движения.",
-      "sourceKey": "spina-shvz"
+      "sourceKey": "spina-shvz",
+      "displayCoverage": [
+        "Вся спина, шея и плечи"
+      ]
     },
     {
       "name": "Массаж рук и кистей",
@@ -186,7 +193,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Если вы много печатаете за компьютером, занимаетесь уборкой или часто работаете руками, к вечеру может появиться усталость в кистях, напряжение в предплечьях и скованность в запястьях.",
-      "sourceKey": "arms-hands-vozvraschennaya-lovkost"
+      "sourceKey": "arms-hands-vozvraschennaya-lovkost",
+      "displayCoverage": [
+        "Руки и кисти"
+      ]
     },
     {
       "name": "Массаж ног и ступней",
@@ -223,7 +233,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "После долгой ходьбы, работы стоя или физической нагрузки бывает тяжесть в ногах и напряжение в икрах. Ступни устают, и хочется сесть и спокойно отдохнуть.",
-      "sourceKey": "legs-feet-tonus-legkost"
+      "sourceKey": "legs-feet-tonus-legkost",
+      "displayCoverage": [
+        "Ноги и ступни"
+      ]
     },
     {
       "name": "Массаж живота",
@@ -255,7 +268,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Программа подойдёт тем, кто хочет расслабить мышцы живота, спокойно отдохнуть и почувствовать больше комфорта. Моделирующий вариант можно выбрать как часть ухода за телом — с целью улучшить контуры этой области и придать ей более подтянутый вид.",
-      "sourceKey": "abdomen-tsentr-balansa"
+      "sourceKey": "abdomen-tsentr-balansa",
+      "displayCoverage": [
+        "Живот"
+      ]
     },
     {
       "name": "Массаж головы и шеи",
@@ -292,7 +308,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "После занятий, поездок или нескольких часов за компьютером бывает тяжесть в голове и напряжение в шее. Хочется сделать паузу, расслабиться и спокойно отдохнуть.",
-      "sourceKey": "head-neck-yasnost-komfort"
+      "sourceKey": "head-neck-yasnost-komfort",
+      "displayCoverage": [
+        "Голова и шея"
+      ]
     },
     {
       "name": "Массаж лица и декольте",
@@ -329,7 +348,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "К вечеру лицо может выглядеть уставшим, а мышцы лба и челюстей остаются напряжёнными. Здесь можно спокойно отдохнуть и уделить время уходу за собой.",
-      "sourceKey": "face-decollete-svezhest-tonus"
+      "sourceKey": "face-decollete-svezhest-tonus",
+      "displayCoverage": [
+        "Лицо и декольте"
+      ]
     },
     {
       "name": "Осанка до кончиков пальцев",
@@ -366,7 +388,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Когда к концу дня напряжены шея и плечи, беспокоит спина, а руки устают от повседневных дел.",
-      "sourceKey": "complex-line/osanka-do-konchikov-paltsev"
+      "sourceKey": "complex-line/osanka-do-konchikov-paltsev",
+      "displayCoverage": [
+        "Спина · ШВЗ · плечи · руки · кисти"
+      ]
     },
     {
       "name": "Фундамент тела",
@@ -403,7 +428,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Когда приходится много стоять или ходить, к вечеру появляется тяжесть в ногах, а в пояснице и плечах чувствуется напряжение.",
-      "sourceKey": "complex-line/fundament-tela"
+      "sourceKey": "complex-line/fundament-tela",
+      "displayCoverage": [
+        "ШВЗ · спина · поясница · ноги · ступни"
+      ]
     },
     {
       "name": "Интенсив: фокус на главном",
@@ -440,7 +468,11 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Когда приходится долго находиться в одной позе, беспокоит поясница, шея кажется скованной и хочется отвлечься от привычных забот.",
-      "sourceKey": "complex-line/intensiv-fokus-na-glavnom"
+      "sourceKey": "complex-line/intensiv-fokus-na-glavnom",
+      "displayCoverage": [
+        "Поясница · спина · ШВЗ",
+        "+ массаж головы"
+      ]
     },
     {
       "name": "От зажимов до свежести",
@@ -482,7 +514,11 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Когда хочется хорошо размять спину и дополнить сеанс уходом за лицом.",
-      "sourceKey": "complex-line/ot-zazhimov-do-svezhesti"
+      "sourceKey": "complex-line/ot-zazhimov-do-svezhesti",
+      "displayCoverage": [
+        "ШВЗ · спина · поясница",
+        "+ массаж лица и декольте"
+      ]
     },
     {
       "name": "Экспресс-воздействие",
@@ -519,7 +555,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Когда усталость ощущается сразу в нескольких местах: тянет спину, плечи напряжены, а ноги становятся тяжёлыми, когда приходится много сидеть, ходить или подолгу стоять.",
-      "sourceKey": "health-line/express-vozdeystvie"
+      "sourceKey": "health-line/express-vozdeystvie",
+      "displayCoverage": [
+        "Вся задняя поверхность тела"
+      ]
     },
     {
       "name": "Глубокое оздоровление",
@@ -561,7 +600,11 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "После долгого сидения, ходьбы или дня на ногах в спине и плечах может появляться тяжесть. Хочется сменить положение, потянуться и почувствовать лёгкость.",
-      "sourceKey": "health-line/glubokoe-ozdorovlenie"
+      "sourceKey": "health-line/glubokoe-ozdorovlenie",
+      "displayCoverage": [
+        "Вся задняя поверхность тела",
+        "+ массаж головы"
+      ]
     },
     {
       "name": "Полное воздействие",
@@ -612,7 +655,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "После физической нагрузки или дня в одном положении может тянуть спину и поясницу, появляться тяжесть в руках и ногах.",
-      "sourceKey": "health-line/polnoe-vozdeystvie"
+      "sourceKey": "health-line/polnoe-vozdeystvie",
+      "displayCoverage": [
+        "Задняя и передняя поверхности тела"
+      ]
     },
     {
       "name": "Максимальная проработка",
@@ -663,7 +709,11 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "После насыщенного дня может тянуть спину и поясницу, а в ногах — ощущаться тяжесть. Хочется снять накопившуюся усталость и двигаться свободнее.",
-      "sourceKey": "health-line/maksimalnaya-prorabotka"
+      "sourceKey": "health-line/maksimalnaya-prorabotka",
+      "displayCoverage": [
+        "Задняя и передняя поверхности тела",
+        "+ массаж головы и лица"
+      ]
     },
     {
       "name": "Лёгкое погружение",
@@ -700,7 +750,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "После насыщенного дня хочется отвлечься от дел и снять накопившуюся усталость.",
-      "sourceKey": "relax-line/legkoe-pogruzhenie"
+      "sourceKey": "relax-line/legkoe-pogruzhenie",
+      "displayCoverage": [
+        "Вся задняя поверхность тела"
+      ]
     },
     {
       "name": "Комплексный антистресс-релакс",
@@ -742,7 +795,11 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Спина и поясница устают, в плечах ощущается тяжесть, а отвлечься от повседневных дел бывает непросто.",
-      "sourceKey": "relax-line/kompleksnyy-antistress-relaks"
+      "sourceKey": "relax-line/kompleksnyy-antistress-relaks",
+      "displayCoverage": [
+        "Вся задняя поверхность тела",
+        "+ массаж головы"
+      ]
     },
     {
       "name": "Полное погружение",
@@ -788,7 +845,10 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Когда спина и плечи остаются напряжёнными, а в ногах ощущается тяжесть, бывает непросто отвлечься от повседневных дел.",
-      "sourceKey": "relax-line/polnoe-pogruzhenie"
+      "sourceKey": "relax-line/polnoe-pogruzhenie",
+      "displayCoverage": [
+        "Задняя и передняя поверхности тела"
+      ]
     },
     {
       "name": "Тотальное расслабление",
@@ -856,7 +916,101 @@ window.SITE_CONTENT = {
         }
       ],
       "intro": "Делаем массаж задней и передней поверхностей тела, помогая снять напряжение после повседневных нагрузок и полноценно расслабиться.",
-      "sourceKey": "relax-line/totalnoe-rasslablenie"
+      "sourceKey": "relax-line/totalnoe-rasslablenie",
+      "displayCoverage": [
+        "Задняя и передняя поверхности тела",
+        "+ массаж головы и лица"
+      ]
+    }
+  ],
+  "roomGroups": [
+    {
+      "id": "massage",
+      "label": "Зона массажа",
+      "photos": [
+        {
+          "src": "cabinet-920.jpg",
+          "alt": "Полный стол, валик и стена сертификатов",
+          "caption": "Массажный стол"
+        },
+        {
+          "src": "cabinet-913.jpg",
+          "alt": "Стол и стена сертификатов, боковой ракурс",
+          "caption": "Зона массажа"
+        },
+        {
+          "src": "cabinet-953.jpg",
+          "alt": "Обратный ракурс кабинета со стороны шторы",
+          "caption": "Свет и пространство"
+        },
+        {
+          "src": "cabinet-917.jpg",
+          "alt": "Изголовье с корзиной принадлежностей",
+          "caption": "Мягкое изголовье"
+        },
+        {
+          "src": "cabinet-1557.jpg",
+          "alt": "Гибкий держатель телефона у массажного стола",
+          "caption": "Держатель для телефона"
+        }
+      ]
+    },
+    {
+      "id": "rest",
+      "label": "Зона отдыха",
+      "photos": [
+        {
+          "src": "cabinet-1562.jpg",
+          "alt": "Зона ожидания: диван и столик с напитками",
+          "caption": "Зона отдыха"
+        },
+        {
+          "src": "cabinet-938.jpg",
+          "alt": "Место ожидания, диван и небольшой столик",
+          "caption": "После сеанса"
+        },
+        {
+          "src": "cabinet-1563.jpg",
+          "alt": "Чайная зона: чайник, вода, стаканчики и чай",
+          "caption": "Вода и чай"
+        },
+        {
+          "src": "cabinet-940.jpg",
+          "alt": "Зеркало, шторы и вечерняя подсветка",
+          "caption": "Зеркало и мягкий свет"
+        },
+        {
+          "src": "cabinet-944.jpg",
+          "alt": "Штора, гирлянда и вешалка",
+          "caption": "Отдельная зона для переодевания"
+        }
+      ]
+    },
+    {
+      "id": "details",
+      "label": "Детали кабинета",
+      "photos": [
+        {
+          "src": "cabinet-962.jpg",
+          "alt": "Круглый светильник и зелень крупным планом",
+          "caption": "Свет в деталях"
+        },
+        {
+          "src": "cabinet-959.jpg",
+          "alt": "Камин с зеленью и подсветкой",
+          "caption": "Уютный уголок"
+        },
+        {
+          "src": "cabinet-978.jpg",
+          "alt": "Подготовленные полотенца на полке",
+          "caption": "Свежие полотенца"
+        },
+        {
+          "src": "cabinet-1556.jpg",
+          "alt": "Подогреватель масла с дозатором",
+          "caption": "Тёплое масло"
+        }
+      ]
     }
   ]
 };
